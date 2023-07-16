@@ -38,29 +38,29 @@ const CrudForm = ({ addEquipo, editData, editEquipo }) => {
                     id: null
                 })
             }
-    } else {
-        alert('Debe ingresar datos')
-}
+        } else {
+            alert('Debe ingresar datos')
+        }
     };
 
-const handleCahnge = (e) => {
-    setFormData({
-        ...formData,
-        [e.target.name]: e.target.value
-    })
-}
+    const handleCahnge = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        })
+    }
 
-return <>
-    <form className='m-3' onSubmit={handleSubmit}>
-        <label htmlFor="equipo">equipo:</label>
-        <input type="text" name="equipo" id='equipo' onChange={handleCahnge} value={formData.equipo} />
-        <label htmlFor="pais">pais:</label>
-        <input type="text" name="pais" id='pais' onChange={handleCahnge} value={formData.pais} />
-        <input className='btn btn-success mx-1' type="submit" value="Enviar" />
-        <input className='btn btn-danger mx-1' type="reset" value="Limpìar
+    return <>
+        <form className='m-3' onSubmit={handleSubmit}>
+            <label htmlFor="equipo">equipo:</label>
+            <input type="text" name="equipo" id='equipo' onChange={handleCahnge} value={formData.equipo} />
+            <label htmlFor="pais">pais:</label>
+            <input type="text" name="pais" id='pais' onChange={handleCahnge} value={formData.pais} />
+            <input className='btn btn-success mx-1' type="submit" value="Enviar" />
+            <input className='btn btn-danger mx-1' type="reset" value="Limpìar
             " />
-    </form>
-</>
+        </form>
+    </>
 }
 
 export default CrudForm;

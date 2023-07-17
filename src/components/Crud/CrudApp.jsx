@@ -1,18 +1,22 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CrudForm from './CrudForm'
 import CrudTable from './CrudTable'
-const baseDatos = [
-    { id: 1, equipo: 'Barcelona', pais: 'España' },
-    { id: 2, equipo: 'Guadalajara', pais: 'México' },
-    { id: 3, equipo: 'Boca JR', pais: 'Argentina' },
-    { id: 4, equipo: 'Manchester City', pais: 'Inglaterra' },
-    { id: 5, equipo: 'Real Madrid', pais: 'España' },
-]
 
 const CrudApp = () => {
 
     const [editData, setEditData] = useState(null)
-    const [equipos, setEquipos] = useState(baseDatos);
+    const [equipos, setEquipos] = useState(() => {
+        const saveEquipos = window.localStorage.getItem('equiposData');
+        if (saveEquipos) {
+            return JSON.parse(saveEquipos)
+        } else {
+            return []
+        }
+    });
+
+    useEffect(() =>{
+        window.localStorage.setItem('equiposData', JSON.stringify(equipos))
+    }, [equipos]);
 
     // inserción de datos
     const addEquipo = (equipo) => {
@@ -32,9 +36,15 @@ const CrudApp = () => {
 
     //ELIMINAR UN REGISTRO
     const deleteEquipo = (id) => {
-       console.log(id)
+        const isDelete = window.confirm(`Desea eliminar el registro ${id}`)
+
+        if (isDelete) {
+            const newEquipos = equipos.filter(el => el.id !== id)
+            setEquipos(newEquipos)
+
+        }
     }
-     
+
 
 
     return <>

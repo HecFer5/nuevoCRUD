@@ -2,39 +2,39 @@
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from "react";
+import {Link} from 'react-router-dom'
 
-const CrudForm = ({ addEquipo, editData, editEquipo }) => {
-
+const CrudForm = ({ addNombre, editData, editNombre, nombre }) => {
     useEffect(() => {
         if (editData !== null) {
             setFormData(editData)
         } else {
             setFormData({
-                equipo: '',
-                pais: '',
+                nombre: '',
+                cientifico: '',
                 id: null
             })
         }
-    }, [editData])
+    }, [])
 
     const [formData, setFormData] = useState({
-        equipo: '',
-        pais: '',
+        nombre: '',
+        cientifico: '',
         id: null
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (formData.equipo !== '' && formData.pais !== '') {
+        if (formData.nombre !== '' && formData.cientifico !== '') {
             if (editData !== null) {
-                editEquipo(formData)
+                editNombre(formData)
             } else {
                 formData.id = Date.now()
-                addEquipo(formData)
+                addNombre(formData)
                 setFormData({
-                    equipo: '',
-                    pais: '',
+                    nombre: '',
+                    cientifico: '',
                     id: null
                 })
             }
@@ -51,15 +51,32 @@ const CrudForm = ({ addEquipo, editData, editEquipo }) => {
     }
 
     return <>
-        <form className='m-3' onSubmit={handleSubmit}>
-            <label htmlFor="equipo">equipo:</label>
-            <input type="text" name="equipo" id='equipo' onChange={handleCahnge} value={formData.equipo} />
-            <label htmlFor="pais">pais:</label>
-            <input type="text" name="pais" id='pais' onChange={handleCahnge} value={formData.pais} />
-            <input className='btn btn-success mx-1' type="submit" value="Enviar" />
-            <input className='btn btn-danger mx-1' type="reset" value="Limpìar
-            " />
-        </form>
+        <div className="card">
+            <div className="card-header">
+                Especies
+            </div>
+            <div className="card-body">
+                <form className='m-3' onSubmit={handleSubmit}>
+
+                    <div className="form-group">
+                        <label htmlFor="nombre">Nombre Común:</label>
+                        <input type="text" name="nombre" id='nombre' onChange={handleCahnge}  className="form-control"  />
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="cientifico">Nombre Científico:</label>
+                        <input type="text" name="cientifico" id='cientifico' onChange={handleCahnge} className="form-control" />
+                    </div>
+                    <input className='btn btn-success mx-1' type="submit" value=" Enviar " />
+                    <input className='btn btn-danger mx-1' type="reset" />
+                </form>
+                
+            </div>
+            
+        </div>
+        <hr />
+        <Link to='/' className='btn btn-danger mx-1 padding-x-4'>Salir</Link>
+        
     </>
 }
 

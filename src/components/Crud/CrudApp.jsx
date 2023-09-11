@@ -5,42 +5,42 @@ import CrudTable from './CrudTable'
 const CrudApp = () => {
 
     const [editData, setEditData] = useState(null)
-    const [equipos, setEquipos] = useState(() => {
-        const saveEquipos = window.localStorage.getItem('equiposData');
-        if (saveEquipos) {
-            return JSON.parse(saveEquipos)
+    const [nombres, setNombres] = useState(() => {
+        const saveNombres = window.localStorage.getItem('nombresData');
+        if (saveNombres) {
+            return JSON.parse(saveNombres)
         } else {
             return []
         }
     });
 
     useEffect(() =>{
-        window.localStorage.setItem('equiposData', JSON.stringify(equipos))
-    }, [equipos]);
+        window.localStorage.setItem('nombresData', JSON.stringify(nombres))
+    }, [nombres]);
 
     // inserción de datos
-    const addEquipo = (equipo) => {
-        console.log(equipo)
-        setEquipos([
-            ...equipos,
-            equipo
+    const addNombre = (nombre) => {
+        console.log(nombre)
+        setNombres([
+            ...nombres,
+            nombre
         ])
     }
     /// EDITAR UN REGISTRO
-    const editEquipo = (equipo) => {
-        const newEquipo = equipos.map(el => el.id === equipo.id ? equipo : el)
-        setEquipos(newEquipo)
+    const editNombre = (nombre) => {
+        const newNombre = nombres.map(el => el.id === nombre.id ? nombre : el)
+        setNombres(newNombre)
         setEditData(null)
-        console.log(equipo)
+        console.log(nombre)
     }
 
     //ELIMINAR UN REGISTRO
-    const deleteEquipo = (id) => {
+    const deleteNombre = (id) => {
         const isDelete = window.confirm(`Desea eliminar el registro ${id}`)
 
         if (isDelete) {
-            const newEquipos = equipos.filter(el => el.id !== id)
-            setEquipos(newEquipos)
+            const newNombres = nombres.filter(el => el.id !== id)
+            setNombres(newNombres)
 
         }
     }
@@ -48,9 +48,9 @@ const CrudApp = () => {
 
 
     return <>
-        <h2>CRUD de equipos de futbol...</h2>
-        <CrudForm addEquipo={addEquipo} editData={editData} editEquipo={editEquipo} />
-        <CrudTable equipos={equipos} setEditData={setEditData} deleteEquipo={deleteEquipo} />
+        <h2>CRUD de nombres de futbol...</h2>
+        <CrudForm addNombre={addNombre} editData={editData} editNombre={editNombre} />
+        <CrudTable nombres={nombres} setEditData={setEditData} deleteNombre={deleteNombre} />
     </>
 }
 export default CrudApp;

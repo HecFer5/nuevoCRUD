@@ -15,7 +15,7 @@ const MenuInicial = () => {
                             <Link to='/lista' className='opcion'>Listar</Link>
                         </div>
                         <div className='orquideas-card tres'>
-                            <Link to='/edita' className='opcion'>Correcciones</Link>
+                            <Link to='/edita'  className='opcion'>Correcciones</Link>
                         </div>
 
                     </main>

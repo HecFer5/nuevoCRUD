@@ -1,6 +1,7 @@
 import Modal from './Modal'
 import { useState } from 'react'
 import CrudForm from '../Crud/CrudForm'
+import Editar from '../Crud/Editar'
 
 
 
@@ -22,7 +23,7 @@ const Modales = () => {
 
             <button className='btn btn-success m-2' onClick={() => setVerContador(true)}>Ver Menu</button>
             <Modal isOpen={verContador} onClose={() => setVerContador(false)}>
-                <CrudForm /></Modal>
+                <Editar /></Modal>
 
 
             <button className='btn btn-success m-2' onClick={() => setVerFormulario(true)}>Ver Formulario</button>

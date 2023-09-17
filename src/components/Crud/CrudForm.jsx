@@ -3,8 +3,20 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from "react";
 import {Link} from 'react-router-dom'
+import CrudTable from "./CrudTable";
 
-const CrudForm = ({ addNombre, editData, editNombre, nombre }) => {
+const CrudForm = ({ addNombre, editData, editNombre, nombre, pasaNombre, editMode}) => {
+   
+   
+
+    if(CrudTable.editMode){
+        console.log('verdadero en editForm', CrudTable.editMode, 'jjj')
+     }else{
+       console.log('falso en editForm', CrudTable.editMode, 'jjj')
+     }
+  
+
+   
     useEffect(() => {
         if (editData !== null) {
             setFormData(editData)
@@ -50,6 +62,8 @@ const CrudForm = ({ addNombre, editData, editNombre, nombre }) => {
         })
     }
 
+   
+      
     return <>
         <div className="card">
             <div className="card-header">
@@ -75,7 +89,7 @@ const CrudForm = ({ addNombre, editData, editNombre, nombre }) => {
             
         </div>
         <hr />
-        <Link to='/' className='btn btn-danger mx-1 padding-x-4'>Salir</Link>
+        <Link to='*' className='btn btn-danger mx-1 padding-x-4'>Salir</Link>
         
     </>
 }

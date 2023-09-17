@@ -2,21 +2,20 @@ import React, { useEffect, useState } from 'react'
 import helpFetch from './helpers/helpFetch'
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
-import CrudAPI from './CrudAPI'
-import MenuInicial from './MenuInicial'
-import CrudForm from './CrudForm'
-import { Link } from 'react-router-dom'
 import Modal from '../Modales/Modal'
-import Editar from './Editar'
+import CrudForm from './CrudForm'
 
 
-const CrudTable = (editNombre) => {
+
+
+const CrudTable = (setEditData, editData) => {
   const API = helpFetch()
-  const [editData, setEditData] = useState(null)
+
   const [nombres, setNombres] = useState([])
+  const [nombre, setNombre] = useState('')
   const [loading, setLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState(null)
-  const [verContador, setVerContador] = useState(false)
+  // const [modal, setModal] = useState(false)
 
   const navigate = useNavigate()
 
@@ -56,7 +55,7 @@ const CrudTable = (editNombre) => {
             deleteNombre(nombre.id))
 
         } else if (result.isDenied) {
-          //   Swal.fire('Changes are not saved', '', 'info')
+          console.log('gg')
         }
       })
 
@@ -68,7 +67,7 @@ const CrudTable = (editNombre) => {
   const deleteNombre = (id) => {
     fetch("http://localhost/nombres/?borrar=" + id)
       .then(respuesta => respuesta.json())
-      .then((datosRespuesta) => {
+      .then((modalRespuesta) => {
 
         console.log();
 
@@ -78,34 +77,82 @@ const CrudTable = (editNombre) => {
     window.location.replace('');
   }
 
+  ////////////////////////////////////////////////////
+
+  const [id, setId] = useState('')
+  const [editMode, setEditMode] = useState(false)
+
+   const editarNombre = (elNombre) => {
+    console.log(editMode, 'uno')
+    setEditMode(!editMode)
+ 
+    setNombre(elNombre.nombre)
+    console.log(editMode, 'dos')
+
+   if(editMode===true){
+   console.log('verdadero en tabla')
+}else{
+  console.log('falso en tabla')
+}  
+    
+    setId(id)
+     navigate('/crudApi', editMode)
+    // editMode(false)
+
+
+    // fetch("http://localhost/nombres/?borrar=" + id)
+    //   .then(respuesta => respuesta.json())
+    //   .then((modalRespuesta) => {
+
+    //     console.log();
+
+
+    //   })
+    //   .catch(console.log)
+    // window.location.replace('');
+  }
+  //   const cambioValor = (e) => {
+  //     setData[e.target.name] = e.target.value
+  //     setData(data)
+  // }
+
+  // const editarRegistro = (nombre) => {
+  //   editNombre(nombre.id)
+  // }
 
   // /// EDITAR Y ACTUALIZAR UN REGISTRO
-  // const editNombre = (nombre) => {
-  //   fetch("http://localhost/nombres/?actualizar=1", {
+  // const editNombre = (id) => {
+  //   fetch("http://localhost/nombres/?actualizar=" + id, {
   //     method: 'POST',
-  //     body: JSON.stringify(nombre)
+  //     body: JSON.stringify(id)
   //   })
   //     .then(respuesta => respuesta.json())
-  //     .then((datosRespuesta) => {
+  //     .then((modalRespuesta) => {
 
-  //       console.log(datosRespuesta);
-  //       //  navigate('/edita/' , {para})
-  //       // <Editar editNombre={editNombre} />
-
+  //       console.log(modalRespuesta);
+  //       setEditData(...editData, id)
 
 
 
   //     })
   //     .catch(console.log)
-
+  //   console.log('edita', id)
   // }
 
+  const navigateEditar = () => {
+    // navigate('/lista')
+    window.location.replace('');
 
-  return <>
-
+  }
+  return <div className='container-fluid'>
+    <hr />
+    <hr />
+    <hr />
+    <hr />
+    <hr />
     <h3>Registros Ingresados</h3>
-    <table className='table'>
-      <thead>
+    <table className='table table-striped table-bordered border-primary'>
+      <thead className='table-dark'>
         <tr>
           <td>Nombre Común</td>
           <td>Nombre Científico</td>
@@ -120,14 +167,14 @@ const CrudTable = (editNombre) => {
                 <td>{nombre.nombre}</td>
                 <td>{nombre.cientifico}</td>
                 <td>
-                  {/* <button className='btn btn-outline-warning mx-1' onClick={() => editNombre(nombre)} >Editar</button> */}
-                  {/* <Link to='/edita' className='btn btn-outline-primary mx-1' >editar</Link> */}
+                  <button className='btn btn-outline-warning mx-1'
+                    onClick={() => editarNombre(nombre)} >Editar
+                  </button>
 
-                  <button className='btn btn-success m-2' onClick={() => setVerContador(true)}>Ver Menu</button>
-                  <Modal nombre={nombre} isOpen={verContador} onClose={() => setVerContador(false)}>
-                    <Editar /></Modal>
+                  <button className='btn btn-outline-danger mx-1'
+                    onClick={() => BorraRegistro(nombre)}>Eliminar
+                  </button>
 
-                  <button className='btn btn-outline-danger mx-1' onClick={() => BorraRegistro(nombre)}>Eliminar</button>
                 </td>
               </tr>
             })
@@ -136,7 +183,8 @@ const CrudTable = (editNombre) => {
       </tbody>
     </table>
 
-  </>
+  </div>
+
 }
 
 export default CrudTable
